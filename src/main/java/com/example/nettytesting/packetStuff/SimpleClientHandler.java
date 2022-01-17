@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
@@ -19,7 +18,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("Client successfully create channel connection");
         for (int i = 0; i < 10; i++) {
-            ByteBuf byteBuf = Unpooled.copiedBuffer("Client msg:" + i, StandardCharsets.UTF_8);
+            ByteBuf byteBuf = Unpooled.copiedBuffer("Client msg:" + i + "&", StandardCharsets.UTF_8);
             ctx.writeAndFlush(byteBuf);
         }
         super.channelActive(ctx);
