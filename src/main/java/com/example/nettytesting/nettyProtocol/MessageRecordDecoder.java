@@ -29,6 +29,8 @@ public class MessageRecordDecoder extends ByteToMessageDecoder {
             ObjectInputStream ios = new ObjectInputStream(bis);
             record.setBody(ios.readObject());
             System.out.println("De-serialized:" + record);
+            // 3. 添加对象
+            list.add(record);
         } else {
             System.out.println("Empty Content");
         }
