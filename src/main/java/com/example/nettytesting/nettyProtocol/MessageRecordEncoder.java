@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 public class MessageRecordEncoder extends MessageToByteEncoder<MessageRecord> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, MessageRecord messageRecord, ByteBuf byteBuf) throws Exception {
-        System.out.println("Start Encoding");
         Header header = messageRecord.getHeader();
         byteBuf.writeLong(header.getSessionId());
         byteBuf.writeByte(header.getReqType());

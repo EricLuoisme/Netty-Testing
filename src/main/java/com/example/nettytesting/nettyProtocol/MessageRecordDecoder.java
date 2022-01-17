@@ -12,7 +12,6 @@ public class MessageRecordDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        System.out.println("Start Decoding");
         MessageRecord record = new MessageRecord();
         // 获取header内容
         Header header = new Header();

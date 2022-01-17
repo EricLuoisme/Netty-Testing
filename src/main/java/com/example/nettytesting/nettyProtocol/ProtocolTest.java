@@ -27,12 +27,20 @@ public class ProtocolTest {
         mr.setBody("Hello Protocol");
 
         // 编码后, 写到Channel
+        System.out.println("======Encode======");
         channel.writeOutbound(mr);
-
         ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
         new MessageRecordEncoder().encode(null, mr, buf);
-        // 解码后, 读取消息
-        channel.writeInbound(buf);
+        // 解码后, 拆包, 读取消息
+        System.out.println("======Decode======");
+        ByteBuf slice_1 = buf.slice(0, 7);
+        ByteBuf slice_2 = buf.slice(7, buf.readableBytes() - 7);
+        // 由于浅复制, 并且不在JVM中管理, 所以引用计数器也是用的同一个
+        // 当别的地方的调用释放后, 需要调用retain, 将引用+1, 维持可用性
+        slice_1.retain();
+
+        channel.writeInbound(slice_1);
+        channel.writeInbound(slice_2);
     }
 
 }
